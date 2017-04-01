@@ -15,12 +15,21 @@ class Code:
         allNegatives = open("unhappy.txt", "r")
         
         
+        
         for word in allPositives.readlines():
             self.goodList.append_element(word)
         for word in allNegatives.readlines():
             badList.append_element(word)
         allPositives.close()
         allNegatives.close()
+        
+        niceNegativeList = Linked_List()
+        
+        for i in badList:
+            word = word[:len(i) - 2]
+            niceNegativeList.append_element(word)
+        
+        
         self.goodVerbs = Linked_List()
         self.goodNouns = Linked_List()
         self.goodAdjectives = Linked_List()
