@@ -54,10 +54,12 @@ deprivedA
 deformedA
 denyV
 despicableA
+destroyV
 detrimentalA
 dieV
 dirtyA
 diseaseN
+disgustV
 disgustingA
 disheveledA
 dishonestA
