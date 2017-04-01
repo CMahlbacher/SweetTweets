@@ -10,7 +10,7 @@ class Code:
 
     def __init__(self):
         self.goodList = Linked_List()
-        badList = Linked_List()
+        self.badList = Linked_List()
         allPositives = open("happy.txt", "r")
         allNegatives = open("unhappy.txt", "r")
         
@@ -19,15 +19,15 @@ class Code:
         for word in allPositives.readlines():
             self.goodList.append_element(word)
         for word in allNegatives.readlines():
-            badList.append_element(word)
+            self.badList.append_element(word)
         allPositives.close()
         allNegatives.close()
         
-        niceNegativeList = Linked_List()
+        self.niceNegativeList = Linked_List()
         
-        for i in badList:
-            word = word[:len(i) - 2]
-            niceNegativeList.append_element(word)
+        for i in self.badList:
+            word = i[:len(i) - 2]
+            self.niceNegativeList.append_element(word)
         
         
         self.goodVerbs = Linked_List()
@@ -54,8 +54,8 @@ class Code:
                 self.goodAdverbs.append_element(part)
             elif type == "P":
                 self.goodPrepositions.append_element(part)
-        for i in range(len(badList)):
-            word = badList.get_element_at(i)
+        for i in range(len(self.badList)):
+            word = self.badList.get_element_at(i)
             type = word[len(word)-2:len(word)-1]
             part = word[:len(word)-2]
             if type == "A":
@@ -116,10 +116,19 @@ class Code:
     def getGoodList(self):
         return str(self.goodList)
     
+    def getNegativeList(self):
+        return self.niceNegativeList
+    
+    def listToArray(self, list):
+        array = []
+        for i in list:
+            array.append(i)
+        return array
+    
     
 if __name__ == "__main__":
     code = Code()
-    print(code.getGoodList())
+    print(code.listToArray(code.getNegativeList()))
     
     
     
