@@ -8,18 +8,30 @@ from random import randint
 class Code:
 
     def __init__(self):
-        self._goodList = Linked_List()
-        self._badList = Linked_List()
+        self.goodList = Linked_List()
+        self.badList = Linked_List()
         allPositives = open("happy.txt", "r")
         allNegatives = open("unhappy.txt", "r")
         
         
+        
         for word in allPositives.readlines():
-            self._goodList.append_element(word)
+            self.goodList.append_element(word)
         for word in allNegatives.readlines():
-            self._badList.append_element(word)
+            self.badList.append_element(word)
         allPositives.close()
         allNegatives.close()
+        
+        self.niceNegativeList = Linked_List()
+        self.nicePositiveList = Linked_List()
+        for i in self.badList:
+            word = i[:len(i) - 2]
+            self.niceNegativeList.append_element(word)
+        for i in self.goodList:
+            word = i[:len(i) - 2]
+            self.nicePositiveList.append_element(word)
+        
+        
         self.goodVerbs = Linked_List()
         self.goodNouns = Linked_List()
         self.goodAdjectives = Linked_List()
@@ -30,8 +42,8 @@ class Code:
         self.badAdjectives = Linked_List()
         self.badAdverbs = Linked_List()
         self.badPrepositions = Linked_List()
-        for i in range(len(self._goodList)):
-            word = self._goodList.get_element_at(i)
+        for i in range(len(self.goodList)):
+            word = self.goodList.get_element_at(i)
             type = word[len(word)-2:len(word)-1]
             part = word[:len(word)-2]
             if type == "A":
@@ -44,8 +56,8 @@ class Code:
                 self.goodAdverbs.append_element(part)
             elif type == "P":
                 self.goodPrepositions.append_element(part)
-        for i in range(len(self._badList)):
-            word = self._badList.get_element_at(i)
+        for i in range(len(self.badList)):
+            word = self.badList.get_element_at(i)
             type = word[len(word)-2:len(word)-1]
             part = word[:len(word)-2]
             if type == "A":
@@ -102,36 +114,34 @@ class Code:
             if searchTerm.lower() == array.get_element_at(m).lower():
                 return True
         return False
-    def goodListToArray(self, goodList):
-       ans = []
-       for i in goodList:
-          ans.append(i)
-       return ans
-          
+    
     def getGoodList(self):
-       return self._goodList
-       
-    def badListToArray(self, goodList):
-       ans = []
-       for i in badgoodList:
-          ans.append(i)
-       return ans
-          
-    def getbadList(self):
-       return self._badList
+        return self.goodList
+    
+    def getNegativeList(self):
+        return self.niceNegativeList
+    
+    def listToArray(self, list):
+        array = [None]*len(list)
+        for i in range(len(list)):
+            array[i] = list.get_element_at(i)
+        return array
        
 sweetTweets = MarkovBot()
 
 
+#thefile = open('replies.txt', 'w')
+#for item in keywords:
+  #thefile.write("%s\n" % item)
 # Get the current directory's path
 dirname = os.path.dirname(os.path.abspath(__file__))
 # Construct the path to the book
-book = os.path.join(dirname, 'happy.txt')
+book = os.path.join(dirname, 'timemachine.txt')
 # Make your bot read the book!
 sweetTweets.read(book)
 
 
-#my_first_text = sweetTweets.generate_text(25, seedword=['nice','kind'])
+#my_first_text = sweetTweets.generate_text(25, seedword=keywords)
 #print("Sweet Tweets says:")
 #print(my_first_text)
 
@@ -144,23 +154,24 @@ access_token = '847998506312888321-bmPb5lgqL8xBOaK7QR7oUrSIEEM5IEv'
 # Access Token Secret
 access_token_secret = 'uUgSMYTUS7cQegJGpiul2x2Rc6G4inDZsaWKpxqKKwQfd'
 
-code = Code()
 
 # Log in to Twitter
 sweetTweets.twitter_login(cons_key, cons_secret, access_token, access_token_secret)
-print(code.stringSwitch('deformed'))
+print('Logged In!')
 
 # Set some parameters for your bot
 #prefix = code.stringSwitch("a dead failure")
 #targetstring = prefix
-goodList = code.getGoodList()
-keywords = code.goodListToArray(goodList)
-targetstring = 'deformed'
-prefix = code.stringSwitch(targetstring)
+
+targetstring = 'ugly'
+prefix = 'Hey, we should try to be nicer on the internet. Have a good day, friend! Next time, try a message like this: '#code.stringSwitch(targetstring)
 print(prefix)
+code = Code()
+goodList = code.getGoodList()
+keywords = code.nicePositiveList#code.listToArray(goodList)
 #suffix = '#DiluteTheHate'
 suffix = '#DiluteTheHate'
-maxconvdepth = 1
+maxconvdepth = 2
 
 # Start auto-responding to tweets
 
