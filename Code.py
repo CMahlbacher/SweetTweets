@@ -9,14 +9,14 @@ from random import randint
 class Code:
 
     def __init__(self):
-        goodList = Linked_List()
+        self.goodList = Linked_List()
         badList = Linked_List()
         allPositives = open("happy.txt", "r")
         allNegatives = open("unhappy.txt", "r")
         
         
         for word in allPositives.readlines():
-            goodList.append_element(word)
+            self.goodList.append_element(word)
         for word in allNegatives.readlines():
             badList.append_element(word)
         allPositives.close()
@@ -31,8 +31,8 @@ class Code:
         self.badAdjectives = Linked_List()
         self.badAdverbs = Linked_List()
         self.badPrepositions = Linked_List()
-        for i in range(len(goodList)):
-            word = goodList.get_element_at(i)
+        for i in range(len(self.goodList)):
+            word = self.goodList.get_element_at(i)
             type = word[len(word)-2:len(word)-1]
             part = word[:len(word)-2]
             if type == "A":
@@ -104,10 +104,13 @@ class Code:
                 return True
         return False
     
+    def getGoodList(self):
+        return str(self.goodList)
+    
     
 if __name__ == "__main__":
     code = Code()
-    print(code.stringSwitch("hey man fuck you"))
+    print(code.getGoodList())
     
     
     
